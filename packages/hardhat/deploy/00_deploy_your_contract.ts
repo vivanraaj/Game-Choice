@@ -7,7 +7,7 @@ import { DeployFunction } from "hardhat-deploy/types";
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployPhatConsumerContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+const deployGameChoice: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   /*
     On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
 
@@ -21,7 +21,7 @@ const deployPhatConsumerContract: DeployFunction = async function (hre: HardhatR
   const { deployer } = await hre.getNamedAccounts();
   const { deploy } = hre.deployments;
 
-  await deploy("PhatConsumerContract", {
+  await deploy("GameChoice", {
     from: deployer,
     // Contract constructor arguments
     args: [deployer], //TODO
@@ -35,8 +35,8 @@ const deployPhatConsumerContract: DeployFunction = async function (hre: HardhatR
   // const yourContract = await hre.ethers.getContract("YourContract", deployer);
 };
 
-export default deployPhatConsumerContract;
+export default deployGameChoice;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags YourContract
-deployPhatConsumerContract.tags = ["PhatConsumerContract"];
+deployGameChoice.tags = ["GameChoice"];

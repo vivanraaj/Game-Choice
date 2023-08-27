@@ -142,7 +142,7 @@
 .modalHeader {
     align-items: flex-start;
     align-self: stretch;
-    display: flex;
+    display:  inline-block;
     flex: 0 0 auto;
     gap: 10px;
     padding: 16px 24px;
@@ -205,6 +205,12 @@
     width: 264px;
 }
 
+.group2 {
+    height: 160px;
+    position: relative;
+    width: 390px;
+}
+
 .overlapGroupWrapper {
     height: 42px;
     left: 138px;
@@ -221,6 +227,23 @@
     width: 126px;
 }
 
+.overlapGroup2 {
+    background-color: #7b9630;
+    border-radius: 9px;
+    height: 42px;
+    position: relative;
+    width: 126px;
+}
+
+.overlapGroup3 {
+    background-color: #963068;
+    border-radius: 9px;
+    height: 42px;
+    position: relative;
+    width: 126px;
+}
+
+
 .textWrapper2 {
     color: white;
     font-family: "Montserrat-SemiBold", Helvetica, serif;
@@ -234,6 +257,15 @@
     top: 12px;
     width: 57px;
 }
+
+.overlapGroup4 {
+    background-color: #963068;
+    border-radius: 9px;
+    height: 42px;
+    position: relative;
+    width: 126px;
+}
+
 
 .overlapWrapper {
     height: 42px;

@@ -2,6 +2,7 @@ import {development, production, LensClient, PaginatedResult, ProfileFragment, P
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import Modal from 'react-modal';
 import styles from "~~/styles/home.module.css";
+import { useScaffoldEventSubscriber, useScaffoldContractWrite, useScaffoldContractRead } from "~~/hooks/scaffold-eth";
 
 Modal.setAppElement(':root');
 
@@ -13,9 +14,13 @@ export const ExploreProfiles = () => {
   const [profilesMap, setProfilesMap] = useState<Map<string, ProfileFragment>>(new Map());
   const [paginatedResult, setPaginatedResult] = useState<PaginatedResult<ProfileFragment> | null>(null);
   const [selectedProfile, setSelectedProfile] = useState<ProfileFragment | null>(null);
+  const [userValue, setValue] = useState('0');
+  const [result, setResult] = useState<boolean | null>(null);
+  const [answer, setAnswer] = useState('0');
+ 
 
   const observer = useRef<IntersectionObserver | null>(null);
-  const lastProfileElementRef = useCallback(node => {
+  const lastProfileElementRef = useEffect(node => {
     if (observer.current) observer.current?.disconnect();
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && paginatedResult?.next) {
@@ -40,12 +45,55 @@ export const ExploreProfiles = () => {
         })
     }
   }, [paginatedResult]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const onProfileClick = (profileId) => {
     const profile = profilesMap.get(profileId);
     // @ts-ignore
     setSelectedProfile(profile);
   };
+
+  // const {data: answer} = useScaffoldContractRead({
+  //   contractName: "GameChoice",
+  //   functionName: "setResults",
+  // });
+
+  useScaffoldEventSubscriber({
+    contractName: "GameChoice",
+    eventName: "ResponseReceived",
+    listener: (answer) => {
+      setAnswer(answer)
+      // console.log("the value is:", answer)
+    },
+  });
+
+  const checkAnswer = () => {
+    // Call the method in any function
+    console.log("The answer is", answer);
+    // BELOW IS THE LOGIC
+
+    if (answer.toString() == userValue){
+      setResult(true);
+    }
+    else{
+      setResult(false);
+    }
+    // Reset the form fields
+    setValue('');
+
+    return result;
+    };
+
+ 
+  const { writeAsync, isLoading } = useScaffoldContractWrite({
+    contractName: "GameChoice",
+    functionName: "compare",
+    // value: "1000000000",
+    args: [selectedProfile?.id],
+    onBlockConfirmation: txnReceipt => {
+      console.log("📦 Transaction blockHash", txnReceipt.blockHash);
+    },
+  });
 
   const getProfilePicture = (profileId: string) => {
     const picture = profilesMap.get(profileId)?.picture;
@@ -102,31 +150,40 @@ export const ExploreProfiles = () => {
             <div className={styles.modalBody}>
               <div className={styles.textWrapper}>
                 Profile ID: {selectedProfile?.id}
-                <br />
+                {/* <br />
                 Profile Name: {selectedProfile?.name}
                 <br />
                 Total Followers: {selectedProfile?.stats.totalFollowers}
                 <br />
                 Total Following: {selectedProfile?.stats.totalFollowing}
                 <br />
-                Total Posts: {selectedProfile?.stats.totalPosts}
+                Total Posts: {selectedProfile?.stats.totalPosts} */}
               </div>
             </div>
             <div className={styles.modalFooter}>
-              <div className={styles.group}>
-                <button className={styles.overlapGroupWrapper} onClick={() => setSelectedProfile(null)}>
-                  <div className={styles.overlapGroup}>
-                    <button className={styles.textWrapper2}>Close</button>
-                  </div>
+              <div className={styles.group2}>
+          <input className={styles.overlapGroup4} type="number" value={userValue} onChange={e => { setValue(e.target.value);}}
+                  placeholder="Predict Score" />
+              < button className={styles.overlapGroup4} type="submit" onClick={() => writeAsync()}>
+                Submit
                 </button>
-                <button className={styles.overlapWrapper} onClick={() => setSelectedProfile(null)}>
-                  <div className={styles.divWrapper}>
-                    <div className={styles.textWrapper3}>Dig ⛏</div>
+                  <button className={styles.overlapGroup4} type="submit" onClick={() => checkAnswer()}>
+
+                  Check Answer
+                  </button>
+                  <button className={styles.overlapGroup4} onClick={() => setSelectedProfile(null)}>
+
+                    Close
+                  </button>
+                  <div className={styles.text} >
+                  <p> The score you guessed was {userValue} </p>
                   </div>
-                </button>
-              </div>
+                  <div className={styles.text} >
+                  <p>The value you entered is: {answer?.toString() || "323" }</p>
+                  </div>
             </div>
           </div>
+        </div>
         </div>
         </Modal>
     </div>

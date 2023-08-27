@@ -4,8 +4,8 @@ const contracts = {
       chainId: "31337",
       name: "localhost",
       contracts: {
-        PhatConsumerContract: {
-          address: "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+        GameChoice: {
+          address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
           abi: [
             {
               inputs: [
@@ -152,18 +152,6 @@ const contracts = {
                 {
                   indexed: false,
                   internalType: "uint256",
-                  name: "reqId",
-                  type: "uint256",
-                },
-                {
-                  indexed: false,
-                  internalType: "string",
-                  name: "pair",
-                  type: "string",
-                },
-                {
-                  indexed: false,
-                  internalType: "uint256",
                   name: "errno",
                   type: "uint256",
                 },
@@ -213,6 +201,25 @@ const contracts = {
               anonymous: false,
               inputs: [
                 {
+                  indexed: false,
+                  internalType: "uint256",
+                  name: "reqId",
+                  type: "uint256",
+                },
+                {
+                  indexed: false,
+                  internalType: "string",
+                  name: "profileId",
+                  type: "string",
+                },
+              ],
+              name: "NewCollectRequest",
+              type: "event",
+            },
+            {
+              anonymous: false,
+              inputs: [
+                {
                   indexed: true,
                   internalType: "address",
                   name: "previousOwner",
@@ -231,18 +238,6 @@ const contracts = {
             {
               anonymous: false,
               inputs: [
-                {
-                  indexed: false,
-                  internalType: "uint256",
-                  name: "reqId",
-                  type: "uint256",
-                },
-                {
-                  indexed: false,
-                  internalType: "string",
-                  name: "pair",
-                  type: "string",
-                },
                 {
                   indexed: false,
                   internalType: "uint256",
@@ -352,6 +347,19 @@ const contracts = {
                 },
               ],
               stateMutability: "view",
+              type: "function",
+            },
+            {
+              inputs: [
+                {
+                  internalType: "string",
+                  name: "profileId",
+                  type: "string",
+                },
+              ],
+              name: "compare",
+              outputs: [],
+              stateMutability: "nonpayable",
               type: "function",
             },
             {
@@ -737,14 +745,20 @@ const contracts = {
             {
               inputs: [
                 {
-                  internalType: "string",
-                  name: "profileId",
-                  type: "string",
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
                 },
               ],
-              name: "request",
-              outputs: [],
-              stateMutability: "nonpayable",
+              name: "requestsByUsers",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
               type: "function",
             },
             {
