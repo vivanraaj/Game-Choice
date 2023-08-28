@@ -1,11 +1,11 @@
 const contracts = {
-  31337: [
+  80001: [
     {
-      chainId: "31337",
-      name: "localhost",
+      chainId: "80001",
+      name: "polygonMumbai",
       contracts: {
         GameChoice: {
-          address: "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
+          address: "0x0Bb9D9aDeeD862Df5Af831D3ADfa7D9CdfaF0a83",
           abi: [
             {
               inputs: [

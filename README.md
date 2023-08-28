@@ -2,7 +2,7 @@
 
 ## Profile Activity Score Predictor
 
-1. Contract ID on Polygon of `Consumer Contract` : 0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e
+1. Contract ID on PolygonMumbai of `Consumer Contract` : 0x0Bb9D9aDeeD862Df5Af831D3ADfa7D9CdfaF0a83
 2. LensAPI Oracle Endpoint Address : 0x14f125ea7533bcfd0c78cf6f55f813515030b21e
 3. My smart contract is at packages/hardhat/contracts/GameChoice.sol.
 

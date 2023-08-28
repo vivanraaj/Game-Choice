@@ -20,7 +20,7 @@ export const ExploreProfiles = () => {
  
 
   const observer = useRef<IntersectionObserver | null>(null);
-  const lastProfileElementRef = useEffect(node => {
+  const lastProfileElementRef = useCallback(node => {
     if (observer.current) observer.current?.disconnect();
     observer.current = new IntersectionObserver(entries => {
       if (entries[0].isIntersecting && paginatedResult?.next) {
